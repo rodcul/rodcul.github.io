@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 9 — The Safety Net & Glue</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 9 · Underneath · Capstone</p>
+    <h1>The Safety Net &amp; Glue</h1>
+    <p class="dek">The loop runs fast and clean only because something underneath it refuses to let it regress — and a little glue keeps you moving between the stages.</p>
+  </header>
+
+  <p>You have walked the whole loop: align, spec, slice, build, fix, tend. This final lesson is the part that
+  is always <em>on</em> but rarely seen — the safety net that stops the agent from quietly breaking things,
+  plus the small glue skills that connect the stages and carry work between sessions.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>The safety net — so the loop cannot silently regress</h2>
+  <table>
+    <tr><th>Skill</th><th>What it guards</th></tr>
+    <tr><td><code>git-guardrails-claude-code</code></td><td>Blocks dangerous git commands <em>before</em> they execute — no accidental force-push or history rewrite from an over-eager agent.</td></tr>
+    <tr><td><code>setup-pre-commit</code></td><td>Wires Husky + lint-staged + Prettier + typecheck + tests as commit gates, so broken or unformatted code cannot land.</td></tr>
+  </table>
+
+  <p>Together these mean the discipline is not a thing you have to <em>remember</em>. The agent literally
+  cannot commit code that fails the gates, and cannot run the git commands that lose work. The floor holds
+  even on a tired Friday.</p>
+
+  <h2>The glue — keep moving between skills and sessions</h2>
+  <table>
+    <tr><th>Skill</th><th>Kind</th><th>Use it to…</th></tr>
+    <tr><td><code>ask-matt</code></td><td><span class="tag user">USER</span></td><td>Route yourself — when unsure which skill fits the moment, it points you at the right one.</td></tr>
+    <tr><td><code>handoff</code></td><td><span class="tag user">USER</span></td><td>Compact the current conversation into a clean handoff another agent can pick up cold.</td></tr>
+    <tr><td><code>prototype</code></td><td><span class="tag user">USER</span></td><td>Build a throwaway prototype — a terminal app or UI variations — to learn fast before committing to a design.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="label">Why glue matters</span>
+    The loop is not a straight line you walk once. You jump back to grilling mid-build, hand work to a fresh
+    agent when context fills, and throw away a prototype to learn what to actually spec. The glue skills are
+    what make those moves cheap instead of disruptive.
+  </div>
+
+  <h2>The whole loop, one last time</h2>
+  <div class="pipeline">
+    <div class="stage"><span class="num">01 ALIGN</span><span class="skill">grill-with-docs</span><span class="what">Kill ambiguity</span></div>
+    <div class="stage"><span class="num">02 SPEC</span><span class="skill">to-prd</span><span class="what">Synthesize intent</span></div>
+    <div class="stage"><span class="num">03 SLICE</span><span class="skill">to-issues</span><span class="what">Vertical slices</span></div>
+    <div class="stage model"><span class="num">04 BUILD</span><span class="skill">tdd</span><span class="what">Red-green-refactor</span></div>
+    <div class="stage model"><span class="num">05 FIX</span><span class="skill">diagnosing-bugs</span><span class="what">Reproduce → fix</span></div>
+    <div class="stage"><span class="num">06 TEND</span><span class="skill">improve-codebase-architecture</span><span class="what">Fight entropy</span></div>
+  </div>
+  <p class="cite">…and underneath all six, always on: <code>git-guardrails-claude-code</code> and the
+  <code>setup-pre-commit</code> gates.</p>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"Your context window is full mid-feature and you want a fresh agent to continue. Which skill?","options":["handoff, to compact the context","ask-matt, to route the work","prototype, to rebuild it fast","triage, to reassign the issue"],"answer":0,"why":"handoff compacts the current conversation into a clean handoff another agent can pick up. ask-matt routes you to a skill; prototype builds throwaways; triage moves issues through states."},
+    {"q":"What stops an agent from force-pushing and rewriting shared history?","options":["git-guardrails-claude-code blocks it","setup-pre-commit reformats it","the tdd skill reverts it","domain-modeling forbids it"],"answer":0,"why":"git-guardrails-claude-code blocks dangerous git commands before they run. setup-pre-commit gates commit CONTENT (lint, types, tests) but does not police git commands themselves."},
+    {"q":"What does setup-pre-commit actually install as commit gates?","options":["Husky, lint, format, types, tests","A PRD, issues, and a tracker","Deep modules and clean seams","A handoff and a router skill"],"answer":0,"why":"setup-pre-commit wires Husky + lint-staged + Prettier + typecheck + tests so broken or unformatted code cannot land. The other options are outputs of entirely different stages."},
+    {"q":"You are unsure which skill fits the situation in front of you. What do you reach for?","options":["ask-matt, the routing skill","handoff, the context packer","prototype, the throwaway build","grill-me, the interview loop"],"answer":0,"why":"ask-matt is the router that points you at the right skill for the moment. The others are specific tools; ask-matt exists precisely for when you do not yet know which one you need."}
+  ]'></div>
+
+  <h2>Your win: install the safety net</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Put the net under <code>example-app</code> — set up pre-commit gates and confirm git guardrails are
+    active — then try <code>/ask-matt</code> and <code>/handoff</code> so the glue is familiar before you need
+    it under pressure.
+  </div>
+
+  <pre><code># in ~/code/example-app
+/setup-pre-commit      # Husky + lint-staged + Prettier + typecheck + tests
+/ask-matt              # confirm the router sees the full skill set
+# later, when a session fills up:  /handoff</code></pre>
+
+  <h2>Primary source</h2>
+  <p>The <a href="https://github.com/mattpocock/skills"><strong>git-guardrails, setup-pre-commit, ask-matt, handoff, and prototype skills</strong></a>
+  in the repo — and your <a href="../reference/skill-map.html">Skill Map</a> for how they sit under the loop.</p>
+
+  <div class="callout win">
+    <span class="label">You finished the loop</span>
+    Nine lessons in, you can name the pipeline, tell user- from model-invoked skills, and run a feature from
+    grilling all the way to a tended architecture with a net underneath. That was the mission: <em>adopt the
+    full discipline</em>. The real test is doing it on live work.
+  </div>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — let us run it for real.</strong> Pick one genuine feature for
+    <code>example-app</code> and we will walk the entire loop together, end to end, skill by skill. Or ask me
+    to revisit any lesson, deepen a stage, or set the next mission (authoring your own skills?). Head back to
+    the <a href="index.html">course map</a> any time.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0008-codebase-design-and-architecture.html">← Lesson 8</a> &nbsp;·&nbsp;
+      <a href="index.html">All lessons</a> &nbsp;·&nbsp;
+      <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp;
+      Next → <a href="0010-getting-started-full-cycle.html">Lesson 10: Full Cycle Runbook</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

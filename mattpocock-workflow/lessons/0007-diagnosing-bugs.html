@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 7 — Diagnosing Bugs</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 7 · Fix</p>
+    <h1>Diagnosing Bugs</h1>
+    <p class="dek">The scientific method, applied to a failure. Reproduce it before you ever reach for a fix.</p>
+  </header>
+
+  <p>The single worst habit an agent can amplify is the <em>guess-patch</em>: a bug appears, the model
+  immediately edits something plausible, the symptom shifts, and now you have two problems. The
+  <code>diagnosing-bugs</code> skill replaces guessing with a disciplined loop — the same one a careful engineer
+  runs by reflex.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>The five steps</h2>
+  <p>Each step gates the next. You do not hypothesize until you can reproduce; you do not fix until a hypothesis
+  has been tested. That ordering is the whole value.</p>
+
+  <div class="pipeline">
+    <div class="stage model"><span class="num">01</span><span class="skill">reproduce</span><span class="what">Make the bug happen reliably, on demand</span></div>
+    <div class="stage model"><span class="num">02</span><span class="skill">minimize</span><span class="what">Strip to the smallest case that still fails</span></div>
+    <div class="stage model"><span class="num">03</span><span class="skill">hypothesize</span><span class="what">State a specific, testable cause</span></div>
+    <div class="stage model"><span class="num">04</span><span class="skill">instrument</span><span class="what">Add logging or probes to test the guess</span></div>
+    <div class="stage model"><span class="num">05</span><span class="skill">fix</span><span class="what">Change the proven cause, then lock it with a test</span></div>
+  </div>
+
+  <p>The first two steps do most of the work. A bug you can <strong>reproduce</strong> on command is half solved;
+  a bug you have <strong>minimized</strong> to ten lines often reveals its own cause. Only then does a hypothesis
+  mean anything — and the fix closes with a regression test, handing the bug back to <code>tdd</code> from
+  Lesson 6 so it can never silently return.</p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">Model-invoked</span>
+    Like <code>tdd</code>, this is fired by Claude — it engages when a bug, failing test, or unexpected behaviour
+    appears. Both are build-stage discipline, but for different situations: <code>tdd</code> is for making
+    <em>new</em> behaviour; <code>diagnosing-bugs</code> is for repairing <em>broken</em> behaviour. Do not confuse
+    them, and do not let the agent skip reproduction to jump at a fix.
+  </div>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"A bug report lands. What is the correct FIRST move under this skill?","options":["Reproduce it reliably first","Patch the most likely cause","Add a regression test now","Rewrite the failing module"],"answer":0,"why":"Reproduce before anything else. A bug you cannot trigger on demand cannot be diagnosed, and a fix you cannot verify is just another guess."},
+    {"q":"Both fire automatically. When does diagnosing-bugs run instead of tdd?","options":["When behaviour is already broken","When a new feature is started","When the PRD is being written","When issues are being sliced"],"answer":0,"why":"diagnosing-bugs handles repairing broken behaviour; tdd handles building new behaviour. Both are model-invoked, but the situation decides which one engages."},
+    {"q":"Why minimize the failing case before forming a hypothesis?","options":["A small case reveals the cause","A small case runs much faster","To reduce the diff line count","To satisfy the linter rules"],"answer":0,"why":"Stripping the reproduction to its smallest form removes noise and often exposes the cause directly — making any hypothesis far sharper and easier to test."},
+    {"q":"How should the loop END after the real cause is fixed?","options":["Lock it with a regression test","Close the issue and move on","Delete the instrumentation logs","Refactor the entire module"],"answer":0,"why":"A regression test hands the bug to tdd so it cannot silently return. Removing logs is housekeeping; the durable outcome is the test that pins the behaviour."}
+  ]'></div>
+
+  <h2>Your win: run the loop on a real bug</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Take one real failure in <code>example-app</code> — a red test, a broken build, or a misbehaving
+    <code>example-service</code> step — and resist fixing it. Reproduce and minimize first, and watch the cause surface.
+  </div>
+
+  <p>In <code>~/code/example-app</code>, hold the agent to the order:</p>
+  <pre><code># in ~/code/example-app
+pnpm test            # or reproduce the broken behaviour directly
+
+# then, to the agent:
+"There is a bug: &lt;describe the failure&gt;. Do not fix it yet.
+ First reproduce it reliably, then minimize to the smallest
+ failing case, state a hypothesis, and only then propose a fix
+ with a regression test."</code></pre>
+
+  <p>The discipline is in the restraint: no edit until the cause is proven.
+  <span class="cite">diagnosing-bugs is model-invoked; see it in <a href="https://github.com/mattpocock/skills">the repo</a>.</span></p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The fix and its regression test are committed, so <code>/clear</code> now. A short, focused context is
+    where an LLM does its sharpest work — the long trail of failed hypotheses and instrumentation is exactly
+    the stale chatter you want gone before the next task. The regression test is the durable proof the bug
+    stays dead. Full map of clear points: the <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>diagnosing-bugs skill in mattpocock/skills</strong></a>
+  — the exact step list the model follows is short and worth internalizing so you can spot when it is being skipped.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Have a live bug in <code>example-app</code>? Bring it and
+    we will run the full reproduce-minimize-fix loop together. Next lesson: <strong>Codebase Design &amp;
+    Architecture</strong> — keeping the design clean as the agent moves fast.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0006-the-tdd-loop.html">← Lesson 6</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0008-codebase-design-and-architecture.html">Lesson 8: Codebase Design</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

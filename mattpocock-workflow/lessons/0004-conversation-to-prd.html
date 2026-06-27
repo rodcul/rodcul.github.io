@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4 — Conversation → PRD</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 4 · Spec</p>
+    <h1>Conversation → PRD</h1>
+    <p class="dek">Grilling resolved the decisions. Now freeze them into one durable document the work can derive from.</p>
+  </header>
+
+  <p>By the end of Lesson 2 you had grilled a feature until every decision branch was resolved, and in
+  Lesson 3 you sharpened the domain model behind it. But a conversation is volatile — it scrolls away, it
+  lives in one agent session, it cannot be handed to a teammate or a fresh context. The next move turns that
+  hard-won clarity into something durable: a <strong>PRD</strong>.</p>
+
+  <h2>What <code>to-prd</code> does</h2>
+  <p><code>to-prd</code> is <strong>user-invoked</strong>: you type it when a feature has been talked through.
+  It <em>synthesizes the conversation</em> into a single Product Requirements Document and publishes it to the
+  tracker you configured during <code>/setup-matt-pocock-skills</code>.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <div class="callout">
+    <span class="label">User-invoked</span>
+    You decide the feature is ready to crystallize, then type <code>/to-prd</code>. It does not run on its own —
+    a PRD is a deliberate commitment, not something the agent should snapshot mid-thought.
+  </div>
+
+  <h2>PRD vs CONTEXT.md — do not confuse them</h2>
+  <p>This is the trap. Both are documents you produce with the skills, but they answer different questions:</p>
+  <table>
+    <tr><th>Document</th><th>Scope</th><th>Lifespan</th></tr>
+    <tr><td><code>CONTEXT.md</code></td><td>The standing <em>domain model</em> — vocabulary, entities, rules for the whole project.</td><td>Lives and grows with the repo.</td></tr>
+    <tr><td><strong>PRD</strong></td><td>The intent of <em>one feature</em> — what to build and why, this time.</td><td>Created per feature; issues derive from it.</td></tr>
+  </table>
+  <p>A PRD <em>uses</em> the vocabulary that CONTEXT.md establishes — which is exactly why grilling and domain
+  modeling come first. A PRD written against a sharp domain model is terse and unambiguous; one written
+  against a vague one is padded with re-explanation.</p>
+
+  <div class="pipeline">
+    <div class="stage"><span class="num">02-03 ALIGN</span><span class="skill">grill-with-docs</span><span class="what">Decisions resolved, CONTEXT.md sharp</span></div>
+    <div class="stage"><span class="num">04 SPEC</span><span class="skill">to-prd</span><span class="what">Conversation → PRD in the tracker</span></div>
+    <div class="stage"><span class="num">05 SLICE</span><span class="skill">to-issues</span><span class="what">PRD → vertical-slice issues</span></div>
+  </div>
+
+  <h2>Check yourself</h2>
+  <p>Recall before revealing — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"You have just grilled a new feature until every decision is resolved. Which skill freezes that intent?","options":["to-prd, which you invoke","to-issues, which you invoke","grill-with-docs, run again","domain-modeling, by the model"],"answer":0,"why":"to-prd synthesizes the resolved conversation into a PRD. to-issues comes after the PRD exists; grilling already happened; domain-modeling sharpens vocabulary, it does not capture feature intent."},
+    {"q":"A teammate asks how a PRD differs from CONTEXT.md. Best one-line answer?","options":["PRD is one feature, CONTEXT is the domain","CONTEXT is one feature, PRD is the domain","Both capture the same standing model","Both are scoped to a single feature only"],"answer":0,"why":"CONTEXT.md is the standing domain model for the whole project; a PRD captures the intent of one feature, this time. They are different scopes, not the same thing."},
+    {"q":"Where does to-prd publish the document it produces?","options":["To the tracker you configured at setup","To a random file in the home folder","Only to the terminal, never saved","To the CONTEXT.md domain model file"],"answer":0,"why":"to-prd publishes to the issue tracker configured during /setup-matt-pocock-skills. It does not overwrite CONTEXT.md, and the point is a durable artifact, not terminal-only output."},
+    {"q":"Why grill and model the domain BEFORE writing the PRD, not after?","options":["A sharp model makes the PRD terse","It lets the agent skip the tests","Because a PRD cannot use vocabulary","To avoid configuring the tracker"],"answer":0,"why":"A PRD written against a sharp domain model is terse and unambiguous because it reuses settled vocabulary. The other options are false: PRDs rely on shared vocabulary, and tracker setup is unrelated to ordering."}
+  ]'></div>
+
+  <h2>Your win: produce a real PRD for example-app</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Turn a grilled feature conversation into a real PRD on
+    <code>~/code/example-app</code> — for example a new capability for the
+    <code>example-service</code> (you already have <code>service-spec.md</code> and <code>roadmap.md</code> to
+    ground it). When done, you have a spec that Lesson 5 can slice into issues.
+  </div>
+
+  <p>In the anchor repo, after talking a feature through with the agent:</p>
+  <pre><code># in ~/code/example-app
+# 1. grill the feature first (Lesson 2) so decisions are resolved
+# 2. then crystallize it:
+/to-prd</code></pre>
+
+  <p>If the skill asks where to publish, point it at your tracker or the repo
+  <code>docs/</code> folder. Read the PRD it produces and check: does every requirement use vocabulary your
+  <code>CONTEXT.md</code> already defines? If it has to re-explain a term, that term belongs back in CONTEXT.md.
+  <span class="cite">Behavior per the <a href="https://github.com/mattpocock/skills">to-prd skill</a>.</span></p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The PRD is now published to your tracker, so <code>/clear</code> now. A short, focused context is where an
+    LLM does its sharpest work — less to attend to means tighter reasoning, less drift onto the long grilling
+    transcript, and lower cost and latency. The slice stage (<code>/to-issues</code>) reads the PRD directly,
+    so it needs none of that chat history. Full map of clear points: the
+    <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>to-prd skill in mattpocock/skills</strong></a>
+  — its <code>SKILL.md</code> body is short and tells you exactly what it puts in a PRD and where it publishes.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to run <code>/to-prd</code> on a real
+    example-app feature with you, or review a PRD it produced? Just say so. Next lesson:
+    <strong>Vertical Slices</strong> — using <code>to-issues</code> to break this PRD into independently
+    grabbable work.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0003-domain-modeling.html">← Lesson 3</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0005-vertical-slices-to-issues.html">Lesson 5: Vertical Slices</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

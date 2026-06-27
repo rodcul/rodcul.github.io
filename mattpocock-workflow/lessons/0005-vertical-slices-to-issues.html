@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 5 — Vertical Slices: PRD → Issues</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 5 · Slice</p>
+    <h1>Vertical Slices: PRD → Issues</h1>
+    <p class="dek">A PRD is one big thing. Work happens in small things. How you cut it decides everything that follows.</p>
+  </header>
+
+  <p>You have a PRD from Lesson 4. Now it has to become issues an agent (or a teammate) can pick up and finish.
+  The single most consequential decision here is <em>how you cut</em>. Cut it wrong and every later stage —
+  TDD, review, handoff — inherits the mess. <code>to-issues</code> exists to cut it the right way:
+  into <strong>vertical slices</strong>.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>The key idea: vertical, not horizontal</h2>
+  <p>Imagine the PRD is a layered cake — UI on top, business logic in the middle, data at the bottom. There are
+  two ways to cut it.</p>
+
+  <table>
+    <tr><th>Cut</th><th>What each issue contains</th><th>Cost</th></tr>
+    <tr><td><strong>Vertical slice</strong></td><td>One thin capability, end to end: a bit of UI + its logic + its data.</td><td>Ships value immediately; grabbable in parallel; testable on its own.</td></tr>
+    <tr><td>Horizontal layer</td><td>All the data, then later all the logic, then later all the UI.</td><td>Nothing works until the last layer lands; blocks parallel work; value is delayed.</td></tr>
+  </table>
+
+  <p>Concrete example on a product site: a "show related products" feature. The <strong>vertical</strong> cut is
+  one issue that takes a single product, computes one related item, and renders it — end to end, demoable.
+  The <strong>horizontal</strong> cut is "build the recommendations table", then "build the API", then "build
+  the component" — three issues where you cannot see anything work until all three are done.</p>
+
+  <div class="callout">
+    <span class="label">User-invoked</span>
+    <code>to-issues</code> is a move you make: you type it against a finished spec. It breaks the PRD into
+    issues that are <em>independently grabbable</em> — each one a vertical slice someone can take without waiting
+    on the others.
+  </div>
+
+  <h2>Then route them: <code>triage</code></h2>
+  <p>Once the slices exist, <code>triage</code> (also user-invoked) moves issues through a
+  <em>state machine of triage roles</em> — so each issue lands in the right state instead of sitting in an
+  undifferentiated pile.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <div class="pipeline">
+    <div class="stage"><span class="num">04 SPEC</span><span class="skill">to-prd</span><span class="what">The feature as one PRD</span></div>
+    <div class="stage"><span class="num">05 SLICE</span><span class="skill">to-issues</span><span class="what">PRD → vertical-slice issues</span></div>
+    <div class="stage"><span class="num">05 ROUTE</span><span class="skill">triage</span><span class="what">Issues → correct states</span></div>
+    <div class="stage model"><span class="num">06 BUILD</span><span class="skill">tdd</span><span class="what">One slice, test-first</span></div>
+  </div>
+
+  <h2>Check yourself</h2>
+  <p>Recall before revealing — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"Which description matches a vertical slice issue?","options":["One thin capability, end to end","All of the data layer at once","The entire UI for the feature","Every API endpoint together"],"answer":0,"why":"A vertical slice is one thin capability cut top to bottom, so it ships value and is testable alone. The other three are horizontal layers, which block value until the last one lands."},
+    {"q":"Why does to-issues prefer vertical slices over horizontal layers?","options":["Slices are grabbable and ship value","Layers finish faster every time","Slices avoid writing any tests","Layers are easier to grill first"],"answer":0,"why":"Vertical slices are independently grabbable and deliver working value early; horizontal layers leave nothing demoable until the final layer. Tests still apply, and grilling happens earlier regardless."},
+    {"q":"After to-issues creates the issues, what does triage do with them?","options":["Moves them through triage-role states","Writes a PRD from the issues","Implements the first issue itself","Builds the project domain model"],"answer":0,"why":"triage moves issues through a state machine of triage roles. Writing the PRD was to-prd, implementation is tdd, and the domain model is domain-modeling and CONTEXT.md."},
+    {"q":"A feature is cut into: build the table, build the API, build the component. What is wrong?","options":["These are horizontal layers, not slices","These are too many vertical slices","Each one already ships real value","Triage cannot route these issues"],"answer":0,"why":"That is a horizontal cut: nothing works until all three land. A vertical slice would do a thin end-to-end path in one issue. Triage can route them, but the cut itself is the problem."}
+  ]'></div>
+
+  <h2>Your win: slice a real PRD on example-app</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Take the PRD from Lesson 4 and turn it into a set of vertical-slice issues for
+    <code>~/code/example-app</code>, then triage them. When done, you have at least one
+    issue that is small, end-to-end, and ready for the TDD loop in Lesson 6.
+  </div>
+
+  <pre><code># in ~/code/example-app
+/to-issues   # slice the PRD into vertical-slice issues
+/triage      # route each issue into the right state</code></pre>
+
+  <p>Sanity check the output: pick any one issue and ask <em>"could I demo this on its own?"</em> If the answer
+  is no, it is probably a horizontal layer — tell the agent to re-slice it end to end.
+  <span class="cite">Behavior per the <a href="https://github.com/mattpocock/skills">to-issues skill</a>.</span></p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The slice issues are in your tracker now, so <code>/clear</code> — then build each issue in its own fresh
+    window. A short, focused context is where an LLM does its sharpest work — one issue in view means tighter
+    reasoning, less drift, and lower cost and latency. Each build reads its issue (plus <code>CONTEXT.md</code>)
+    on its own. Full map of clear points: the <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>to-issues and triage skills in
+  mattpocock/skills</strong></a> — the <code>SKILL.md</code> bodies define exactly what "independently
+  grabbable" means and the triage state machine.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to run <code>/to-issues</code> on your PRD and
+    check each issue is a true vertical slice? Just ask. Next lesson: <strong>The TDD Loop</strong> — taking one
+    slice and building it test-first.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0004-conversation-to-prd.html">← Lesson 4</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0006-the-tdd-loop.html">Lesson 6: The TDD Loop</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

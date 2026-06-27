@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 3 — Domain Modeling: Sharpen the Model</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 3 · Align</p>
+    <h1>Domain Modeling: Sharpen the Model</h1>
+    <p class="dek">A vocabulary is only as good as its hardest case — so go hunting for the cases that break it.</p>
+  </header>
+
+  <p>Lesson 2 produced a <code>CONTEXT.md</code>: the shared words your project uses. But a domain model
+  written in calm conditions hides its gaps. <code>domain-modeling</code> exists to find them — it
+  <strong>builds and sharpens the model with edge-case stress tests</strong>, pushing the vocabulary against
+  situations that naive definitions cannot survive.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>Shared vocabulary, hardened</h2>
+  <p>This is the engineering version of an old idea: a <em>ubiquitous language</em>, where the words in the
+  code, the conversation, and the docs all mean exactly the same thing. When a term survives its worst edge
+  case, it earns its place in the model. When it cannot, you have found ambiguity that would otherwise have
+  surfaced as a bug three weeks later.</p>
+
+  <div class="callout">
+    <span class="label">The move</span>
+    For every noun in your CONTEXT.md, ask: what is the weird version of this? The empty one, the duplicated
+    one, the one in two states at once. If the definition wobbles, the model is not sharp yet.
+  </div>
+
+  <h2>Model-invoked, by design</h2>
+  <p>Unlike the grilling skills you type, <code>domain-modeling</code> is <strong>model-invoked</strong> — it
+  fires when the situation calls for building or sharpening the domain model, not because you summoned it. You
+  set it up once; the agent reaches for it whenever the work touches the model.</p>
+
+  <table>
+    <tr><th>Skill</th><th>Kind</th><th>Role</th></tr>
+    <tr><td><code>grill-with-docs</code></td><td><span class="tag user">USER</span></td><td>You start the interview that drafts the model.</td></tr>
+    <tr><td><code>domain-modeling</code></td><td><span class="tag model">MODEL</span></td><td>The agent sharpens that model and stress-tests its edges.</td></tr>
+  </table>
+
+  <div class="pipeline">
+    <div class="stage"><span class="num">01a ALIGN</span><span class="skill">grill-with-docs</span><span class="what">Draft the vocabulary</span></div>
+    <div class="stage model"><span class="num">01b ALIGN</span><span class="skill">domain-modeling</span><span class="what">You are here — harden it against edges</span></div>
+    <div class="stage"><span class="num">02 SPEC</span><span class="skill">to-prd</span><span class="what">Next — synthesize a PRD</span></div>
+  </div>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"How does domain-modeling get triggered during a work session?","options":["The model fires it itself","You type a slash command","A pre-commit hook runs it","The tracker schedules it"],"answer":0,"why":"domain-modeling is model-invoked: the agent reaches for it when the work needs the domain model built or sharpened, unlike the user-invoked grilling skills."},
+    {"q":"What is the core technique domain-modeling uses to harden the model?","options":["Edge-case stress testing","Counting lines of code","Renaming every variable","Deleting unused exports"],"answer":0,"why":"It builds and sharpens the model by stress-testing it against edge cases, so gaps in the vocabulary surface before they become bugs."},
+    {"q":"Why does a sharp, shared domain model help future agent sessions?","options":["Same words mean one thing","It shortens the test suite","It removes the need for PRDs","It blocks risky git commands"],"answer":0,"why":"A ubiquitous language means code, conversation, and docs use terms identically, so later sessions stay terse and aligned. Guardrails and PRDs are separate skills."},
+    {"q":"Which artifact does domain-modeling deepen, carried over from Lesson 2?","options":["CONTEXT.md, the domain model","REVIEW.md, the audit report","ISSUES.md, the work list","CHANGELOG.md, the history"],"answer":0,"why":"It sharpens the CONTEXT.md domain model produced by grilling. The other files belong to later stages of the loop."}
+  ]'></div>
+
+  <h2>Your win: break your own model</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Your <code>CONTEXT.md</code> survives a deliberate edge-case assault — and the definitions that wobbled
+    are now rewritten to be unambiguous.
+  </div>
+
+  <p>Take the CONTEXT.md from Lesson 2 and have the agent attack it in the anchor repo. A natural-language
+  prompt is enough to engage the model-invoked skill:</p>
+
+  <pre><code># in ~/code/example-app
+# Ask Claude, in plain language:
+"Sharpen the domain model in CONTEXT.md. Stress-test every term against edge cases for
+ our product sites: a site with no products yet, a multi-locale site, a product pulled
+ from sale, two sites sharing one product. Flag any definition that does not hold."</code></pre>
+
+  <p>Work through what it surfaces. Each wobble is a decision you had not made yet — make it, and fold the
+  sharper wording back into <code>CONTEXT.md</code>.
+  <span class="cite">Skill: <a href="https://github.com/mattpocock/skills">domain-modeling in mattpocock/skills</a>.</span></p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The sharpened model is saved back into <code>CONTEXT.md</code>, so <code>/clear</code> now. A short,
+    focused context is where an LLM does its sharpest work — less to attend to means tighter reasoning, less
+    drift, and lower cost and latency. The next stage reloads the model from <code>CONTEXT.md</code>, so none
+    of the edge-case work is lost. See every clear point in the
+    <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>domain-modeling skill body</strong></a> in
+  the repo. For the deeper theory, the idea of a shared "ubiquitous language" comes from domain-driven design —
+  worth a skim once the practical habit lands.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to run the edge-case assault on your
+    CONTEXT.md right now? Unsure whether something is a domain term or just an implementation detail? Ask.
+    Next lesson: <strong>Conversation → PRD</strong> — turning your aligned, sharpened understanding into a
+    real spec with <code>to-prd</code>.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0002-grilling-align-before-code.html">← Lesson 2</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0004-conversation-to-prd.html">Lesson 4: Conversation → PRD</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

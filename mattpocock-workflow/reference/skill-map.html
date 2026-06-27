@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference — The mattpocock/skills Map</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="reference">
+
+  <header class="masthead">
+    <p class="eyebrow">Reference · keep this open</p>
+    <h1>The <code>mattpocock/skills</code> Map</h1>
+    <p class="dek">Every skill, who fires it, and where it sits in the loop. The compressed essence — return here, not to the lessons.</p>
+  </header>
+
+  <p>Source of truth: <a href="https://github.com/mattpocock/skills">github.com/mattpocock/skills</a>.
+  The repo evolves — re-check exact names and descriptions against it. This map is synthesized from the
+  repo and Matt's <a href="https://www.aihero.dev/cohorts/claude-code-for-real-engineers-2026-04">Claude Code for Real Engineers</a> workshop.</p>
+
+  <h2>The core distinction</h2>
+  <p>Every skill is one of two kinds. Internalizing this is half the discipline:</p>
+  <table>
+    <tr><th>Kind</th><th>Who triggers it</th><th>How you use it</th></tr>
+    <tr>
+      <td><span class="tag user">USER-INVOKED</span></td>
+      <td>You, explicitly</td>
+      <td>You type <code>/skill-name</code> (or ask for it). These are <em>moves you choose to make</em> — planning, triage, setup.</td>
+    </tr>
+    <tr>
+      <td><span class="tag model">MODEL-INVOKED</span></td>
+      <td>Claude, automatically</td>
+      <td>Claude reads the description and fires it when the situation matches (writing a feature → <code>tdd</code>; a bug appears → <code>diagnosing-bugs</code>). You set them up; the agent reaches for them.</td>
+    </tr>
+  </table>
+
+  <h2>The pipeline at a glance</h2>
+  <p>A feature flows left to right. Terracotta = you invoke; teal = the model invokes during work.</p>
+  <div class="pipeline">
+    <div class="stage"><span class="num">01 ALIGN</span><span class="skill">grill-with-docs</span><span class="what">Interview to build the domain model → CONTEXT.md</span></div>
+    <div class="stage"><span class="num">02 SPEC</span><span class="skill">to-prd</span><span class="what">Turn the conversation into a PRD in your tracker</span></div>
+    <div class="stage"><span class="num">03 SLICE</span><span class="skill">to-issues</span><span class="what">Break the PRD into vertical-slice issues</span></div>
+    <div class="stage model"><span class="num">04 BUILD</span><span class="skill">tdd</span><span class="what">Red → green → refactor on each slice</span></div>
+    <div class="stage model"><span class="num">05 FIX</span><span class="skill">diagnosing-bugs</span><span class="what">Reproduce → minimize → hypothesize → fix</span></div>
+    <div class="stage"><span class="num">06 TEND</span><span class="skill">improve-codebase-architecture</span><span class="what">Periodic design review against entropy</span></div>
+  </div>
+  <p class="cite">Running underneath all of it: <code>git-guardrails-claude-code</code> blocks dangerous git commands, and
+  <code>setup-pre-commit</code> wires lint/type/test gates so the loop can't regress silently.</p>
+
+  <h2>All skills, grouped</h2>
+
+  <h3>Engineering · user-invoked (you type these)</h3>
+  <table>
+    <tr><th>Skill</th><th>What it does</th></tr>
+    <tr><td><code>ask-matt</code></td><td>Router — when unsure, points you at the right skill for the situation.</td></tr>
+    <tr><td><code>setup-matt-pocock-skills</code></td><td>One-time: configures your issue tracker, triage labels, and docs location.</td></tr>
+    <tr><td><code>grill-with-docs</code></td><td>Interview session that builds the domain model and updates <code>CONTEXT.md</code>.</td></tr>
+    <tr><td><code>to-prd</code></td><td>Synthesizes the conversation into a PRD and publishes it to the tracker.</td></tr>
+    <tr><td><code>to-issues</code></td><td>Breaks a spec into independently-grabbable vertical-slice issues.</td></tr>
+    <tr><td><code>triage</code></td><td>Moves issues through a state machine of triage roles.</td></tr>
+    <tr><td><code>improve-codebase-architecture</code></td><td>Scans for design opportunities, presents an HTML report.</td></tr>
+    <tr><td><code>prototype</code></td><td>Builds throwaway prototypes (terminal apps or UI variations) to learn fast.</td></tr>
+  </table>
+
+  <h3>Engineering · model-invoked (Claude fires these)</h3>
+  <table>
+    <tr><th>Skill</th><th>Fires when…</th></tr>
+    <tr><td><code>tdd</code></td><td>Implementing a feature/fix — drives red-green-refactor.</td></tr>
+    <tr><td><code>diagnosing-bugs</code></td><td>A bug/failure appears — structured reproduce→minimize→hypothesize→instrument→fix.</td></tr>
+    <tr><td><code>domain-modeling</code></td><td>The domain model needs building/sharpening — stress-tests edge cases.</td></tr>
+    <tr><td><code>codebase-design</code></td><td>Designing modules — deep modules, small interfaces, clean seams.</td></tr>
+  </table>
+
+  <h3>Productivity · user-invoked</h3>
+  <table>
+    <tr><th>Skill</th><th>What it does</th></tr>
+    <tr><td><code>grill-me</code></td><td>Relentless interview until every decision branch is resolved.</td></tr>
+    <tr><td><code>handoff</code></td><td>Compacts the current conversation into a handoff for another agent.</td></tr>
+    <tr><td><code>teach</code></td><td>Multi-session teaching using a directory as a stateful workspace.</td></tr>
+    <tr><td><code>writing-great-skills</code></td><td>Reference for authoring predictable, well-written skills.</td></tr>
+  </table>
+
+  <h3>Productivity · model-invoked, and miscellaneous</h3>
+  <table>
+    <tr><th>Skill</th><th>What it does</th></tr>
+    <tr><td><code>grilling</code></td><td>The reusable interview loop underneath <code>grill-me</code> and <code>grill-with-docs</code>.</td></tr>
+    <tr><td><code>git-guardrails-claude-code</code></td><td>Blocks dangerous git commands before they execute.</td></tr>
+    <tr><td><code>setup-pre-commit</code></td><td>Configures Husky + lint-staged + Prettier + typecheck + tests.</td></tr>
+    <tr><td><code>migrate-to-shoehorn</code></td><td>Converts type assertions to <code>@total-typescript/shoehorn</code>.</td></tr>
+    <tr><td><code>scaffold-exercises</code></td><td>Creates exercise structures with sections and solutions.</td></tr>
+  </table>
+
+  <h2>Glossary</h2>
+  <p>Terms used consistently across every lesson. When a lesson uses one of these, it means exactly this.</p>
+  <table>
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td><strong>Skill</strong></td><td>A single <code>SKILL.md</code> file (YAML frontmatter + body) that defines a repeatable workflow the agent follows.</td></tr>
+    <tr><td><strong>User-invoked</strong></td><td>A skill you trigger explicitly with <code>/name</code>. A deliberate move.</td></tr>
+    <tr><td><strong>Model-invoked</strong></td><td>A skill Claude triggers itself when the situation matches its description.</td></tr>
+    <tr><td><strong>CONTEXT.md</strong></td><td>The project's living domain model — shared vocabulary that makes agent sessions terse and aligned.</td></tr>
+    <tr><td><strong>Grilling</strong></td><td>A relentless interview loop that forces every ambiguous decision to be resolved <em>before</em> code is written.</td></tr>
+    <tr><td><strong>PRD</strong></td><td>Product Requirements Document — the synthesized intent, published to your tracker, that issues derive from.</td></tr>
+    <tr><td><strong>Vertical slice</strong></td><td>An issue that delivers one thin end-to-end piece of value, independently grabbable — not a horizontal layer.</td></tr>
+    <tr><td><strong>Red-green-refactor</strong></td><td>TDD cycle: write a failing test (red), make it pass (green), then clean up (refactor).</td></tr>
+    <tr><td><strong>Deep module</strong></td><td>(Ousterhout) A module with a small interface hiding a lot of implementation — the goal of <code>codebase-design</code>.</td></tr>
+    <tr><td><strong>Progressive disclosure</strong></td><td>Loading short skill summaries first, full bodies only when needed — the v1.0 token-saving design.</td></tr>
+  </table>
+
+  <footer class="lesson-footer">
+    <p>← Back to <a href="../lessons/0001-the-workflow-as-a-pipeline.html">Lesson 1</a> ·
+    Primary source: <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></p>
+  </footer>
+
+</main>
+</body>
+</html>

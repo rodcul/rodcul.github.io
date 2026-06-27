@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 6 — The TDD Loop</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 6 · Build</p>
+    <h1>The TDD Loop</h1>
+    <p class="dek">A failing test first. Then the smallest code that passes. Then cleanup — with the test holding the line.</p>
+  </header>
+
+  <p>You have a sliced issue (Lesson 5) that already carries the intent of the PRD. Now the agent builds it
+  — and this is where most AI coding quietly goes wrong: the model writes plausible code, you skim it, and
+  nothing ever <em>proves</em> it does the right thing. The <code>tdd</code> skill closes that gap by making a
+  test the first artifact, not an afterthought.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>Red → green → refactor</h2>
+  <p>The cycle is three small moves, repeated tightly. The win of each move is so small it fits in working
+  memory — which is exactly why it works with an agent moving fast.</p>
+
+  <div class="pipeline">
+    <div class="stage model"><span class="num">RED</span><span class="skill">write a test</span><span class="what">Encode the intent of the issue as a test that fails for the right reason</span></div>
+    <div class="stage model"><span class="num">GREEN</span><span class="skill">make it pass</span><span class="what">The smallest change that turns the test green — no more</span></div>
+    <div class="stage model"><span class="num">REFACTOR</span><span class="skill">clean up</span><span class="what">Improve the design with the test as a safety net</span></div>
+  </div>
+
+  <p>The test is not bureaucracy — it is the <strong>feedback loop</strong>. Red proves the test can fail (so a
+  pass means something). Green keeps the change minimal (so you do not over-build). Refactor is safe precisely
+  because the test will scream if you break behaviour.</p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">Model-invoked</span>
+    <code>tdd</code> is fired by Claude, not by you. Once installed, when the agent sets out to implement a
+    feature it engages this loop on its own — so the discipline is simply <em>on</em>. Your job is to give it a
+    sharp issue and to notice if it skips straight to code without a failing test first.
+  </div>
+
+  <h2>Why the test comes from the issue</h2>
+  <p>Because you grilled (Lesson 2) and sliced (Lesson 5), the issue states one thin end-to-end behaviour. That
+  behaviour <em>is</em> the test: "given X, the function returns Y." TDD then turns your earlier alignment work
+  into an executable check. Skip the grilling and the test just encodes a guess.</p>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"In the TDD loop, what must you do FIRST when starting a new slice?","options":["Write a test that fails first","Write the minimal passing code","Refactor the surrounding module","Open an issue in the tracker"],"answer":0,"why":"Red comes first: a test that fails for the right reason proves the test is meaningful before any implementation exists. Code-first defeats the purpose."},
+    {"q":"Who triggers the tdd skill during a build session?","options":["Claude, when implementing","You, by typing a command","The pre-commit hook on save","The issue tracker on assign"],"answer":0,"why":"tdd is model-invoked: the agent engages it automatically when it sets out to build a feature. You enable it once; you do not have to ask each time."},
+    {"q":"Why keep the GREEN step to the smallest change possible?","options":["To avoid building beyond proof","To raise the total test count","To skip the refactor entirely","To satisfy the linter rules"],"answer":0,"why":"Green means just enough code to pass the failing test — nothing speculative. Over-building adds untested behaviour and undoes the discipline."},
+    {"q":"What makes the REFACTOR step safe to perform?","options":["The test catches any regression","The agent never makes mistakes","The PRD forbids design change","The linter rewrites the code"],"answer":0,"why":"Refactor improves design while the now-passing test stands guard — break behaviour and it fails immediately. That safety net is the whole reason red and green came first."}
+  ]'></div>
+
+  <h2>Your win: ship one slice test-first</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Take a single vertical-slice issue from Lesson 5 and watch it go red → green → refactor on the real repo —
+    a tested unit in <code>example-service/</code> that proves it does what the issue says.
+  </div>
+
+  <p>In <code>~/code/example-app</code>, point the agent at one issue and insist on the
+  failing test before any implementation:</p>
+  <pre><code># in ~/code/example-app
+# pick the smallest slice from your issue list, then:
+"Implement issue #&lt;n&gt; test-first. Write the failing test for the
+ behaviour first, run it red, then the minimal code to go green,
+ then refactor. Do not write implementation before the test."
+
+pnpm test            # the loop's feedback — run it red, then green</code></pre>
+
+  <p>If the agent jumps to implementation, stop it and ask for the red test — enforcing that order is the skill.
+  <span class="cite">tdd is model-invoked; see it in <a href="https://github.com/mattpocock/skills">the repo</a>.</span></p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The slice is green and committed, so <code>/clear</code> before the next issue. A short, focused context is
+    where an LLM does its sharpest work — carrying one finished slice into the next only adds noise that means
+    more drift and higher cost. The committed tests and code are the record; the next issue starts clean from
+    its own issue text. Full map of clear points: the <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>tdd skill in mattpocock/skills</strong></a> —
+  it is short, and seeing the exact instructions the model follows demystifies why it behaves the way it does.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to drive a real slice through red-green-refactor
+    on <code>example-service</code> with you? Curious how TDD interacts with your existing test setup? Just say so.
+    Next lesson: <strong>Diagnosing Bugs</strong> — the structured loop for when something is already broken.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0005-vertical-slices-to-issues.html">← Lesson 5</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0007-diagnosing-bugs.html">Lesson 7: Diagnosing Bugs</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Map — The Matt Pocock Dev Workflow</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .toc { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .toc li { display: flex; gap: 1rem; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
+  .toc .n { font-family: var(--mono); font-size: 0.8rem; color: var(--ink-soft); width: 2.2rem; flex: none; }
+  .toc .body { flex: 1; }
+  .toc .body a { font-size: 1.08rem; font-weight: 600; border: none; }
+  .toc .body .desc { display: block; font-family: var(--sans); font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.15rem; }
+  .toc .stage { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 0.15rem 0.5rem; border-radius: 999px; white-space: nowrap; flex: none;
+    background: #f7e3dc; color: var(--accent); align-self: center; }
+  .toc .stage.tend { background: #dcecea; color: var(--accent-2); }
+</style>
+</head>
+<body>
+<main class="reference">
+
+  <header class="masthead">
+    <p class="eyebrow">Course map</p>
+    <h1>The Matt Pocock Dev Workflow</h1>
+    <p class="dek">Nine short lessons that walk the whole loop — align, spec, slice, build, fix, tend — using <code>mattpocock/skills</code> on a real repo.</p>
+  </header>
+
+  <p><strong>Mission:</strong> adopt the full engineering discipline end-to-end, anchored on
+  <code>~/code/example-app</code>. Each lesson gives one tangible win on that repo.
+  Keep the <a href="../reference/skill-map.html">Skill Map reference</a> open as you go.</p>
+
+  <ol class="toc">
+    <li>
+      <span class="n">01</span>
+      <span class="body"><a href="0001-the-workflow-as-a-pipeline.html">The Workflow as a Pipeline</a>
+        <span class="desc">The two kinds of skill, the loop end-to-end, and installing the skills.</span></span>
+      <span class="stage">Foundations</span>
+    </li>
+    <li>
+      <span class="n">02</span>
+      <span class="body"><a href="0002-grilling-align-before-code.html">Grilling: Align Before Code</a>
+        <span class="desc">grill-me / grill-with-docs — interview to kill ambiguity, build CONTEXT.md.</span></span>
+      <span class="stage">Align</span>
+    </li>
+    <li>
+      <span class="n">03</span>
+      <span class="body"><a href="0003-domain-modeling.html">Domain Modeling</a>
+        <span class="desc">domain-modeling — sharpen the domain model, stress-test edge cases.</span></span>
+      <span class="stage">Align</span>
+    </li>
+    <li>
+      <span class="n">04</span>
+      <span class="body"><a href="0004-conversation-to-prd.html">Conversation → PRD</a>
+        <span class="desc">to-prd — synthesize a grilled conversation into a PRD in your tracker.</span></span>
+      <span class="stage">Spec</span>
+    </li>
+    <li>
+      <span class="n">05</span>
+      <span class="body"><a href="0005-vertical-slices-to-issues.html">Vertical Slices: PRD → Issues</a>
+        <span class="desc">to-issues + triage — break a PRD into grabbable vertical-slice issues.</span></span>
+      <span class="stage">Slice</span>
+    </li>
+    <li>
+      <span class="n">06</span>
+      <span class="body"><a href="0006-the-tdd-loop.html">The TDD Loop</a>
+        <span class="desc">tdd — red, green, refactor on a single slice, Matt Pocock style.</span></span>
+      <span class="stage">Build</span>
+    </li>
+    <li>
+      <span class="n">07</span>
+      <span class="body"><a href="0007-diagnosing-bugs.html">Diagnosing Bugs</a>
+        <span class="desc">diagnosing-bugs — reproduce, minimize, hypothesize, instrument, fix.</span></span>
+      <span class="stage">Fix</span>
+    </li>
+    <li>
+      <span class="n">08</span>
+      <span class="body"><a href="0008-codebase-design-and-architecture.html">Codebase Design &amp; Architecture</a>
+        <span class="desc">codebase-design + improve-codebase-architecture — deep modules, fight entropy.</span></span>
+      <span class="stage tend">Tend</span>
+    </li>
+    <li>
+      <span class="n">09</span>
+      <span class="body"><a href="0009-the-safety-net-and-glue.html">The Safety Net &amp; Glue</a>
+        <span class="desc">git-guardrails, setup-pre-commit, handoff, ask-matt, prototype — the rest of the kit.</span></span>
+      <span class="stage tend">Underneath</span>
+    </li>
+    <li>
+      <span class="n">10</span>
+      <span class="body"><a href="0010-getting-started-full-cycle.html">Getting Started: The Full Cycle</a>
+        <span class="desc">Quickstart runbook — the whole loop on a fresh project, then the shorter second feature.</span></span>
+      <span class="stage">Runbook</span>
+    </li>
+  </ol>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — start anywhere, ask anything.</strong> Lessons are designed to be taken in
+    order, but if you already know a stage, skip ahead and tell me — I will adjust what comes next to keep
+    each lesson in your zone of proximal development.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>Primary source: <a href="https://github.com/mattpocock/skills">mattpocock/skills</a> ·
+    Reference: <a href="../reference/skill-map.html">The Skill Map</a></p>
+  </footer>
+
+</main>
+</body>
+</html>

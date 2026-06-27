@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 8 — Codebase Design & Architecture</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 8 · Tend</p>
+    <h1>Codebase Design &amp; Architecture</h1>
+    <p class="dek">An agent accelerates entropy — so design is not a phase, it is something you tend, deliberately and on a schedule.</p>
+  </header>
+
+  <p>Here is the uncomfortable truth about agent-driven development: the faster you ship, the faster the
+  architecture decays. Every quick win adds a little disorder, and an agent adds wins at machine speed. Left
+  alone, the codebase rots. The <em>tend</em> stage exists to push back — intentional design as a daily and
+  weekly habit, not a rescue mission. <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>Two skills, two cadences</h2>
+  <table>
+    <tr><th>Skill</th><th>Kind</th><th>When it acts</th></tr>
+    <tr><td><code>codebase-design</code></td><td><span class="tag model">MODEL</span></td><td>While designing a module — fires automatically to push toward deep modules, small interfaces, clean seams.</td></tr>
+    <tr><td><code>improve-codebase-architecture</code></td><td><span class="tag user">USER</span></td><td>Every few days, on demand — scans for design opportunities and hands you an HTML report.</td></tr>
+  </table>
+
+  <p>So one runs <em>continuously</em> as the agent builds, and one runs <em>periodically</em> when you step
+  back. The periodic one is not blind: it reads the domain language in your
+  <a href="../reference/skill-map.html">CONTEXT.md</a> and the decision records in <code>docs/adr/</code>, so
+  its suggestions speak your vocabulary and respect choices you already made.</p>
+
+  <div class="callout">
+    <span class="label">Deep modules</span>
+    The design ideal (from Ousterhout) is a <strong>deep module</strong>: a small, simple interface hiding a
+    lot of implementation. The opposite — a shallow module whose interface is nearly as big as its insides —
+    adds surface area without hiding complexity. <code>codebase-design</code> nudges every module deeper, with
+    <strong>clean seams</strong> so future change stays cheap.
+  </div>
+
+  <h2>ADRs give the architecture a memory</h2>
+  <p>An <strong>Architecture Decision Record</strong> is a short note in <code>docs/adr/</code> capturing one
+  decision and its reasoning. They matter doubly here: they keep <em>you</em> honest, and they give
+  <code>improve-codebase-architecture</code> a memory — it will not re-litigate a trade-off you have already
+  settled if the reasoning is written down.</p>
+
+  <h2>Where it sits in the loop</h2>
+  <div class="pipeline">
+    <div class="stage model"><span class="num">04 BUILD</span><span class="skill">tdd</span><span class="what">Behind you</span></div>
+    <div class="stage model"><span class="num">05 FIX</span><span class="skill">diagnosing-bugs</span><span class="what">Behind you</span></div>
+    <div class="stage"><span class="num">06 TEND</span><span class="skill">improve-codebase-architecture</span><span class="what">You are here → design review</span></div>
+  </div>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"You step back after a busy week to scan the repo for design problems. Which skill, and how invoked?","options":["improve-codebase-architecture, by you","codebase-design, by the model","domain-modeling, by you now","diagnosing-bugs, by the model"],"answer":0,"why":"The periodic, on-demand design scan is improve-codebase-architecture, which you invoke. codebase-design is the model-invoked one that fires continuously while building modules."},
+    {"q":"What is a deep module, in one line?","options":["Small interface, large implementation","Large interface, small internals","Many files, one function each","One file holding every concern"],"answer":0,"why":"A deep module hides a lot of implementation behind a small, simple interface. A shallow module exposes nearly as much surface as it contains, so it hides little complexity."},
+    {"q":"Why does the architecture skill read docs/adr/ before suggesting changes?","options":["To respect decisions already made","To count the lines of code","To generate the test fixtures","To publish issues to the tracker"],"answer":0,"why":"ADRs give the architecture review a memory of settled trade-offs, so it speaks your vocabulary and does not re-litigate choices you already reasoned through and recorded."},
+    {"q":"Why must design be tended on a schedule in agent-driven work?","options":["Agents accelerate codebase entropy","Agents cannot write any tests","Trackers expire issues weekly","Deep modules forbid refactors"],"answer":0,"why":"An agent adds changes at machine speed, and every change adds a little disorder. Without deliberate, periodic design review, that entropy compounds and the architecture decays."}
+  ]'></div>
+
+  <h2>Your win: run a real architecture review</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    Point <code>improve-codebase-architecture</code> at the <code>example-app</code> monorepo, read the HTML
+    report it produces, and turn the single most useful finding into an ADR in <code>docs/adr/</code> — giving
+    your architecture its first written memory.
+  </div>
+
+  <pre><code># in ~/code/example-app
+/improve-codebase-architecture
+# read the HTML report, then capture one decision:
+# docs/adr/0001-&lt;short-decision-title&gt;.md</code></pre>
+
+  <p>Do not try to act on every suggestion. Pick one, record the decision and its reasoning, and let the next
+  review build on it. Tending is incremental on purpose.</p>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    The decision is captured as an ADR in <code>docs/adr/</code>, so <code>/clear</code> before returning to
+    feature work. A short, focused context is where an LLM does its sharpest work — the long architecture
+    report is reference, not something to keep in the window. The ADR is the durable memory, and
+    <code>improve-codebase-architecture</code> reads <code>docs/adr/</code> next time. Full map of clear points:
+    the <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>The <a href="https://github.com/mattpocock/skills"><strong>improve-codebase-architecture and codebase-design skills</strong></a>
+  in the repo — and Ousterhout's <em>A Philosophy of Software Design</em> for the deep-module idea behind them.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to run the architecture review on
+    <code>example-app</code> and walk the report with you? Unsure how to phrase an ADR? Just ask.
+    Next: <strong>Lesson 9 — The Safety Net &amp; Glue</strong>, the capstone that ties the whole loop together.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0007-diagnosing-bugs.html">← Lesson 7</a> &nbsp;·&nbsp;
+      <a href="index.html">All lessons</a> &nbsp;·&nbsp;
+      <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp;
+      Next → <a href="0009-the-safety-net-and-glue.html">Lesson 9: The Safety Net</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

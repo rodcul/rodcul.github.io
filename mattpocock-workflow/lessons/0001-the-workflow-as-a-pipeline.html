@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1 — The Workflow as a Pipeline</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 1 · Foundations</p>
+    <h1>The Workflow as a Pipeline</h1>
+    <p class="dek">Before any single skill, see the shape of the whole. Two kinds of skill, one loop — and your first install.</p>
+  </header>
+
+  <p>You already drive Claude Code hard. The thing <code>mattpocock/skills</code> changes isn't
+  <em>power</em> — it's <strong>discipline</strong>. Matt's thesis: an agent amplifies whatever habits you
+  give it. Feed it vague requirements and skipped tests, and it produces vague, untested code
+  <em>faster</em>. Feed it a tight loop — align, spec, slice, test, tend — and it compounds good engineering.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a>;
+  <a href="https://www.aihero.dev/cohorts/claude-code-for-real-engineers-2026-04">Claude Code for Real Engineers</a></span></p>
+
+  <p>So the first thing to learn is not a skill. It's the <strong>map</strong>: how the skills chain, and the
+  one distinction that governs all of them.</p>
+
+  <h2>The one distinction: who pulls the trigger</h2>
+  <p>Every skill is either <strong>user-invoked</strong> or <strong>model-invoked</strong>. Get this and the
+  whole collection snaps into focus.</p>
+
+  <div class="callout">
+    <span class="label">User-invoked</span>
+    <strong>You</strong> type <code>/skill-name</code>. These are deliberate <em>moves</em>: grilling yourself
+    for clarity, writing a PRD, slicing issues, reviewing architecture. You decide when.
+  </div>
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">Model-invoked</span>
+    <strong>Claude</strong> fires them itself when the situation matches the skill's description. You set them
+    up once; then writing a feature auto-engages <code>tdd</code>, and hitting a bug auto-engages
+    <code>diagnosing-bugs</code>. You don't ask — the discipline is just <em>on</em>.
+  </div>
+
+  <p>This is why installing the skills changes behaviour even when you never type a command: the
+  model-invoked ones quietly raise the floor on everything the agent does.</p>
+
+  <h2>The loop, end to end</h2>
+  <p>A feature travels this pipeline. Terracotta tops = you invoke; teal tops = the model invokes mid-work.
+  The full annotated version lives in your <a href="../reference/skill-map.html">Skill Map reference</a> —
+  keep that open.</p>
+
+  <div class="pipeline">
+    <div class="stage"><span class="num">01 ALIGN</span><span class="skill">grill-with-docs</span><span class="what">Interview → domain model in CONTEXT.md</span></div>
+    <div class="stage"><span class="num">02 SPEC</span><span class="skill">to-prd</span><span class="what">Conversation → PRD in tracker</span></div>
+    <div class="stage"><span class="num">03 SLICE</span><span class="skill">to-issues</span><span class="what">PRD → vertical-slice issues</span></div>
+    <div class="stage model"><span class="num">04 BUILD</span><span class="skill">tdd</span><span class="what">Red → green → refactor</span></div>
+    <div class="stage model"><span class="num">05 FIX</span><span class="skill">diagnosing-bugs</span><span class="what">Reproduce → minimize → fix</span></div>
+    <div class="stage"><span class="num">06 TEND</span><span class="skill">improve-codebase-architecture</span><span class="what">Periodic design review</span></div>
+  </div>
+
+  <p>Notice the order is non-negotiable for a reason: <strong>alignment before code</strong>. The grilling and
+  PRD stages exist to kill ambiguity <em>before</em> the agent writes anything — because an agent that
+  misunderstands you will build the wrong thing flawlessly, fast.</p>
+
+  <h2>Check yourself</h2>
+  <p>Recall, don't re-read. Answer before revealing — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"You type /to-issues yourself to slice a finished PRD into work. Which kind of skill is it?","options":["User-invoked — a move you choose","Model-invoked — fired by Claude","Either, depending on the repo","Neither — it runs on a hook"],"answer":0,"why":"You triggered it explicitly with a command, so it is user-invoked. Planning and slicing moves are deliberate choices you make — not something the agent decides for you."},
+    {"q":"Mid-feature, Claude hits a failing test and itself begins a reproduce → minimize → fix loop. Which skill fired, and how?","options":["diagnosing-bugs, model-invoked","tdd, always user-invoked","improve-architecture, by you","triage, model-invoked here"],"answer":0,"why":"The situation matched diagnosing-bugs, so the model fired it itself — model-invoked. tdd is for building features (not the bug loop), and triage routes issues, not failures."},
+    {"q":"A teammate asks why grilling and the PRD come BEFORE writing any code. Best answer?","options":["To kill ambiguity before code","To cut token costs in planning","Because tests require a PRD","To pre-fill the issue tracker"],"answer":0,"why":"An aligned agent builds the right thing; a misaligned one builds the wrong thing flawlessly and fast. Alignment-before-code is the whole point — the other options are side effects at best."},
+    {"q":"Which file is the living domain model that keeps later agent sessions terse and aligned?","options":["CONTEXT.md — the domain model","README.md — the project intro","SKILL.md — the skill itself","PRD.md — the requirements"],"answer":0,"why":"grill-with-docs builds CONTEXT.md; shared vocabulary is what lets you say little and be understood. SKILL.md defines a skill; a PRD captures one feature, not the standing domain model."}
+  ]'></div>
+
+  <h2 class="">Your win: install the skills on the anchor repo</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    By the end of this step the full pipeline is <em>live</em> in your real monorepo —
+    <code>~/code/example-app</code> — and the model-invoked skills are already
+    working, no commands needed.
+  </div>
+
+  <p>Run these in the anchor repo (your teacher can run them with you — just ask):</p>
+  <pre><code># in ~/code/example-app
+npx skills@latest add mattpocock/skills    # pick the skills (start: take all)
+/setup-matt-pocock-skills                   # wire up tracker, triage labels, docs location</code></pre>
+
+  <p>The <code>setup</code> step is itself a user-invoked skill — it asks where your issues live and where
+  docs go. Answer for this repo (it already has a <code>docs/</code> folder and uses git).
+  When it finishes, you've completed stage 0 of the loop.
+  <span class="cite">Install command per <a href="https://github.com/mattpocock/skills">the repo README</a>.</span></p>
+
+  <div class="callout">
+    <span class="label">Watch for</span>
+    You have a lot installed already (GSD, SEO suites, MCP). <code>mattpocock/skills</code> is a separate
+    namespace and won't collide — but after install, run <code>/ask-matt</code> once to confirm the router
+    sees them. If a name clashes with an existing skill, tell your teacher and we'll note it.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read first, this week: the <a href="https://github.com/mattpocock/skills"><strong>mattpocock/skills README</strong></a>
+  — skim every skill's one-line description. You don't need depth yet; you need the <em>shape</em>, which is
+  exactly what this lesson gave you. Pair it with Matt's
+  <a href="https://www.aihero.dev/cohorts/claude-code-for-real-engineers-2026-04">workshop</a> for the why.</p>
+
+  <div class="ask-teacher">
+    <strong>I'm your teacher — ask me anything.</strong> Want me to actually run the install on the repo now?
+    Confused why a skill is model- vs user-invoked? Want a particular stage explained against your own code?
+    Just say so. Next lesson: <strong>Grilling</strong> — using <code>grill-with-docs</code> to build a real
+    <code>CONTEXT.md</code> for example-app.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <span style="opacity:.45">← Start of the loop</span> &nbsp;·&nbsp;
+      <a href="index.html">All lessons</a> &nbsp;·&nbsp;
+      <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp;
+      Next → <a href="0002-grilling-align-before-code.html">Lesson 2: Grilling &amp; CONTEXT.md</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

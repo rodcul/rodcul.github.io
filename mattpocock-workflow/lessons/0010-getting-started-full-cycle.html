@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 10 — Getting Started: The Full Cycle</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .run { counter-reset: step; list-style: none; padding: 0; margin: 1.2rem 0; }
+  .run li { counter-increment: step; display: flex; gap: 0.8rem; align-items: baseline;
+    padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
+  .run li::before { content: counter(step); font-family: var(--mono); font-size: 0.72rem;
+    font-weight: 700; color: #fff; background: var(--accent); border-radius: 999px;
+    min-width: 1.4rem; height: 1.4rem; display: inline-flex; align-items: center;
+    justify-content: center; flex: none; }
+  .run li.model::before { background: var(--accent-2); }
+  .run .label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-soft); width: 4.5rem; flex: none; align-self: center; }
+  .run .cmd { flex: 1; }
+  .run .cmd code { font-size: 0.85em; }
+  .run .cmd .note { display: block; font-family: var(--sans); font-size: 0.74rem; color: var(--ink-soft); margin-top: 0.1rem; }
+  .run li.clearpt { counter-increment: none; background: #eef5f4; border-bottom: 1px dashed var(--accent-2); }
+  .run li.clearpt::before { content: "\01F9F9"; background: none; color: var(--accent-2);
+    border: 1px dashed var(--accent-2); }
+  .run li.clearpt .label { color: var(--accent-2); }
+  .run li.clearpt .cmd code { background: #dcecea; }
+  .run .makes { display: inline-block; font-family: var(--mono); font-size: 0.66rem;
+    margin-top: 0.25rem; padding: 0.08rem 0.45rem; border-radius: 4px;
+    background: #f3e0d8; color: var(--accent); }
+  .run .makes::before { content: "writes "; opacity: 0.6; }
+  .run .makes.tracker { background: #e6eef6; color: #3a5a8a; }
+  .run .makes.tracker::before { content: "tracker "; }
+  .run .makes.none { background: #ececea; color: var(--ink-soft); }
+  .run .makes.none::before { content: ""; }
+  .run .clearok { display: inline-block; font-family: var(--sans); font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase; margin: 0.25rem 0 0 0.3rem;
+    padding: 0.08rem 0.45rem; border-radius: 999px; background: #dcecea; color: var(--accent-2); }
+  .run .clearok::before { content: "\01F9F9\00A0"; }
+  .run .clearok.no { background: #f3e0d8; color: var(--accent); }
+  .run .clearok.no::before { content: "\26D4\00A0"; }
+  .twocol { display: grid; grid-template-columns: 1fr; gap: 0.4rem; }
+</style>
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 10 · Runbook</p>
+    <h1>Getting Started: The Full Cycle</h1>
+    <p class="dek">The whole loop on a fresh project as a command list — then how much shorter the second feature is.</p>
+  </header>
+
+  <p>No new theory. This is the cheat-sheet: run it top to bottom. Terracotta = you invoke; teal = fires automatically.
+  Each step links its lesson if you want the why.</p>
+
+  <h2>Feature&nbsp;1 — cold start</h2>
+  <ol class="run">
+    <li><span class="label">Setup</span><span class="cmd"><code>npx skills@latest add mattpocock/skills</code> then <code>/setup-matt-pocock-skills</code><span class="note">Once per repo. Wires tracker, labels, docs. — <a href="0001-the-workflow-as-a-pipeline.html">L1</a><br><span class="makes">.claude/skills/ + setup config</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Align</span><span class="cmd"><code>/grill-with-docs</code><span class="note">Interview kills ambiguity and writes <code>CONTEXT.md</code>. — <a href="0002-grilling-align-before-code.html">L2</a> · <a href="0003-domain-modeling.html">L3</a><br><span class="makes">CONTEXT.md</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Spec</span><span class="cmd"><code>/to-prd</code><span class="note">Reads <code>CONTEXT.md</code> + codebase, publishes a PRD. — <a href="0004-conversation-to-prd.html">L4</a><br><span class="makes tracker">PRD issue</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Slice</span><span class="cmd"><code>/to-issues</code> then <code>/triage</code><span class="note">PRD → grabbable vertical-slice issues. — <a href="0005-vertical-slices-to-issues.html">L5</a><br><span class="makes tracker">slice issues</span><span class="clearok">clear-safe</span></span></span></li>
+    <li class="model"><span class="label">Build</span><span class="cmd">"Implement issue #1 test-first."<span class="note"><code>tdd</code> fires itself: red → green → refactor. — <a href="0006-the-tdd-loop.html">L6</a><br><span class="makes">tests + source, committed</span><span class="clearok">clear between issues</span></span></span></li>
+    <li class="model"><span class="label">Fix</span><span class="cmd">"Reproduce and minimize this bug first."<span class="note"><code>diagnosing-bugs</code> fires on failures. — <a href="0007-diagnosing-bugs.html">L7</a><br><span class="makes">regression test + fix, committed</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Tend</span><span class="cmd"><code>/improve-codebase-architecture</code><span class="note">Every few days; record an ADR in <code>docs/adr/</code>. — <a href="0008-codebase-design-and-architecture.html">L8</a><br><span class="makes">HTML report + docs/adr/ entry</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Net</span><span class="cmd"><code>/setup-pre-commit</code><span class="note">Once. Gates + git-guardrails so nothing regresses silently. — <a href="0009-the-safety-net-and-glue.html">L9</a><br><span class="makes">.husky/ + lint-staged config</span><span class="clearok">clear-safe</span></span></span></li>
+  </ol>
+  <p style="font-size:0.86rem;color:var(--ink-soft);font-style:italic;">Every step above is <span class="clearok" style="font-style:normal;">clear-safe</span> — it wrote a file or a tracker issue, so <code>/clear</code> right after and the next step rehydrates from the artifact.</p>
+
+  <h2>Feature&nbsp;2 — warm start</h2>
+  <p>Setup, the domain model, and the safety net are already paid. You drop straight into the loop:</p>
+  <p style="font-size:0.86rem;color:var(--ink-soft);"><code>/clear</code> first — new feature, fresh window. CONTEXT.md re-grounds the agent instantly.</p>
+  <ol class="run">
+    <li><span class="label">Align</span><span class="cmd"><code>/grill-with-docs</code> <span style="font-size:0.8rem;color:var(--ink-soft);">(not bare <code>/grill-me</code>)</span><span class="note">Re-grills this feature and updates <code>CONTEXT.md</code> — prefer it so the decisions persist and you can clear right after. A bare <code>/grill-me</code> leaves decisions in the chat only.<br><span class="makes">CONTEXT.md (updated)</span><span class="clearok">clear-safe</span></span></span></li>
+    <li><span class="label">Spec→Slice</span><span class="cmd"><code>/to-prd</code> → <code>/to-issues</code> → <code>/triage</code><span class="note"><span class="makes tracker">PRD + slice issues</span><span class="clearok">clear-safe</span></span></span></li>
+    <li class="model"><span class="label">Build→Fix</span><span class="cmd">"Implement test-first." <code>tdd</code> and <code>diagnosing-bugs</code> auto-fire.<span class="note"><span class="makes">tests + source, committed</span><span class="clearok">clear between issues</span></span></span></li>
+  </ol>
+
+  <div class="callout win">
+    <span class="label">Refresh context as often as you can</span>
+    The artifacts <em>are</em> the memory, so <code>/clear</code> after <strong>any</strong> step that wrote a
+    file or a tracker issue — the next step rehydrates from it. Clear between every issue, every stage, every
+    feature; short windows keep the agent sharp. The one rule: never clear after a step whose output lives only
+    in the chat (a bare <code>/grill-me</code>) — persist it first, or use <code>/handoff</code>. Cold-start cost
+    (setup + domain model + safety net) is paid once; every later feature is just
+    <code>grill-with-docs → prd → issues → tdd</code>. Lost? <code>/ask-matt</code> routes you.
+  </div>
+
+  <h2>Check yourself</h2>
+  <div class="quiz" data-quiz='[
+    {"q":"On feature 2 in the same repo, which step do you NOT repeat?","options":["setup-matt-pocock-skills, done once","grill-me for this feature scope","to-issues to slice the new PRD","triage to route the new issues"],"answer":0,"why":"Setup wires the repo once. Grilling, slicing, and triage all recur per feature because each one has its own decisions and issues."},
+    {"q":"Mid-build a test fails. What runs, without you asking?","options":["diagnosing-bugs, it is model-invoked","triage, to re-route the issue","improve-architecture, a design pass","setup-pre-commit, to add gates"],"answer":0,"why":"diagnosing-bugs is model-invoked and matches a failing test. Triage routes issues, the architecture skill is a periodic user move, and pre-commit is one-time setup."},
+    {"q":"After which step is it NOT safe to /clear, because its output is only in the chat?","options":["a bare grill-me, no file written","to-prd, it publishes a PRD","grill-with-docs, it writes CONTEXT.md","to-issues, it creates the issues"],"answer":0,"why":"grill-me resolves decisions in conversation only, so a clear loses them. The other three each persist to a file or the tracker, so the next step rehydrates after a clear."}
+  ]'></div>
+
+  <h2>Primary source</h2>
+  <p>Every command above is a real skill in <a href="https://github.com/mattpocock/skills"><strong>mattpocock/skills</strong></a>.
+  When a name or flag looks off, the repo is ground truth.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher.</strong> Want me to actually drive this runbook on a fresh repo with you, step by step?
+    Say the word and we will do feature 1 for real.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0009-the-safety-net-and-glue.html">← Lesson 9</a> &nbsp;·&nbsp;
+      <a href="index.html">All lessons</a> &nbsp;·&nbsp;
+      <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp;
+      Runbook complete → <a href="index.html">Back to the course map</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

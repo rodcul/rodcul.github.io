@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2 — Grilling: Align Before Code</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="lesson">
+
+  <header class="masthead">
+    <p class="eyebrow">Lesson 2 · Align</p>
+    <h1>Grilling: Align Before Code</h1>
+    <p class="dek">Flip the interview around — let the agent interrogate <em>you</em> until every ambiguous decision is dead.</p>
+  </header>
+
+  <p>Lesson 1 ended on a principle: <strong>alignment before code</strong>. An agent that misunderstands
+  you builds the wrong thing flawlessly, fast. Grilling is the stage that makes that impossible. Instead of
+  you writing a careful prompt and hoping, the agent <em>interviews you</em> — relentlessly — surfacing every
+  unstated assumption and unresolved branch before a single line is written.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <h2>Three skills, one loop</h2>
+  <p>Grilling is built from two skills you invoke and one the model runs underneath them.</p>
+
+  <table>
+    <tr><th>Skill</th><th>Kind</th><th>What it does</th></tr>
+    <tr>
+      <td><code>grill-me</code></td>
+      <td><span class="tag user">USER</span></td>
+      <td>A relentless interview until every decision branch is resolved. Pure clarity — it leaves no file behind, just aligned intent.</td>
+    </tr>
+    <tr>
+      <td><code>grill-with-docs</code></td>
+      <td><span class="tag user">USER</span></td>
+      <td>The same interview, but it also builds the domain model and writes it into <code>CONTEXT.md</code>.</td>
+    </tr>
+    <tr>
+      <td><code>grilling</code></td>
+      <td><span class="tag model">MODEL</span></td>
+      <td>The reusable interview loop underneath both of the above. You rarely call it directly.</td>
+    </tr>
+  </table>
+
+  <p>The split is the whole point. Reach for <code>grill-me</code> when you just need to think a problem
+  through out loud and get unstuck. Reach for <code>grill-with-docs</code> when the clarity you produce
+  should <em>persist</em> as shared vocabulary the next session can read.
+  <span class="cite">— <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></span></p>
+
+  <div class="callout">
+    <span class="label">The mindset shift</span>
+    You are not the one being helpful here — the agent is. A good grilling feels uncomfortable: it keeps
+    asking "what about…?" until you have no vague answers left. That discomfort <em>is</em> the alignment.
+  </div>
+
+  <h2>Where it sits in the loop</h2>
+  <div class="pipeline">
+    <div class="stage"><span class="num">01 ALIGN</span><span class="skill">grill-with-docs</span><span class="what">You are here — interview to CONTEXT.md</span></div>
+    <div class="stage"><span class="num">02 SPEC</span><span class="skill">to-prd</span><span class="what">Next — conversation to PRD</span></div>
+    <div class="stage"><span class="num">03 SLICE</span><span class="skill">to-issues</span><span class="what">PRD to vertical slices</span></div>
+  </div>
+  <p>Grilling feeds everything downstream. A sharp grilling makes the PRD almost write itself; a skipped one
+  means every later stage inherits your ambiguity.</p>
+
+  <h2>Check yourself</h2>
+  <p>Recall before you reveal — the effort is what makes it stick.</p>
+
+  <div class="quiz" data-quiz='[
+    {"q":"You want to think a thorny problem through, but do not need a file saved afterward. Which skill fits?","options":["grill-me, a user-invoked skill","grill-with-docs, which writes a file","domain-modeling, run by the model","to-prd, which drafts a document"],"answer":0,"why":"grill-me is the relentless interview for pure decision resolution; it leaves no file. grill-with-docs would also write CONTEXT.md, which you did not need here."},
+    {"q":"What persistent artifact does grill-with-docs produce that grill-me does not?","options":["CONTEXT.md, the domain model","PRD.md, the requirements doc","A set of tracker issues","A failing first unit test"],"answer":0,"why":"grill-with-docs writes the shared domain vocabulary into CONTEXT.md. PRDs come later from to-prd, and issues come from to-issues."},
+    {"q":"The grilling skill itself is described as which of these?","options":["The loop underneath both","A command you type often","A tracker triage routine","A pre-commit safety hook"],"answer":0,"why":"grilling is the reusable, model-invoked interview loop that powers grill-me and grill-with-docs; you seldom call it directly."},
+    {"q":"Why does the workflow put grilling before writing any code?","options":["To kill ambiguity up front","To reduce planning token cost","Because tests need a model","To populate the issue tracker"],"answer":0,"why":"Alignment before code: an aligned agent builds the right thing, a misaligned one builds the wrong thing fast. Clarity here pays off at every later stage."}
+  ]'></div>
+
+  <h2>Your win: grill out a real CONTEXT.md</h2>
+  <div class="callout win">
+    <span class="label">Tangible win</span>
+    By the end of this step the anchor repo has a <code>CONTEXT.md</code> capturing its real domain language —
+    product site, SEO agent, and the terms your future sessions will lean on to stay terse.
+  </div>
+
+  <p>Pick a genuine upcoming change — say, a new capability for the <code>example-service</code> — and let the
+  agent grill you on it in the anchor repo:</p>
+
+  <pre><code># in ~/code/example-app
+/grill-with-docs    # answer honestly; resist giving vague answers</code></pre>
+
+  <p>Let it push. When it asks something you have not decided, decide it out loud — that is the work. When it
+  finishes, read the <code>CONTEXT.md</code> it produced and check the vocabulary matches how you actually
+  talk about the system. Fix anything that reads like the agent guessing.
+  <span class="cite">Skill: <a href="https://github.com/mattpocock/skills">grill-with-docs in mattpocock/skills</a>.</span></p>
+
+  <div class="callout">
+    <span class="label">Watch for</span>
+    If the grilling feels too shallow, that is usually because you gave a confident-but-vague answer it
+    accepted. Tell it to dig harder on that branch — or tell your teacher and we will sharpen the prompt.
+  </div>
+
+  <div class="callout" style="border-left-color:var(--accent-2);background:#eef5f4;">
+    <span class="label" style="color:var(--accent-2);">🧹 Clear here for best performance</span>
+    You just wrote <code>CONTEXT.md</code> to disk, so <code>/clear</code> now. A short, focused context is
+    where an LLM does its sharpest work — less to attend to means tighter reasoning, less drift onto stale
+    chatter, and lower cost and latency. The next stage (<code>/to-prd</code>) rehydrates straight from
+    <code>CONTEXT.md</code> + the codebase. One caveat: a bare <code>/grill-me</code> writes no file — persist
+    its decisions first (or use <code>/grill-with-docs</code>) before you clear. Full map of clear points:
+    the <a href="0010-getting-started-full-cycle.html">runbook</a>.
+  </div>
+
+  <h2>Primary source</h2>
+  <p>Read the <a href="https://github.com/mattpocock/skills"><strong>grill-with-docs and grill-me skill bodies</strong></a>
+  in the repo — they are short, and seeing the actual interview instructions demystifies why the agent asks
+  what it asks.</p>
+
+  <div class="ask-teacher">
+    <strong>I am your teacher — ask me anything.</strong> Want me to actually run <code>/grill-with-docs</code>
+    with you on a real example-app feature now? Unsure whether a decision belongs in CONTEXT.md? Just say so.
+    Next lesson: <strong>Domain Modeling</strong> — stress-testing that CONTEXT.md against the edge cases that
+    break naive models.
+  </div>
+
+  <footer class="lesson-footer">
+    <p>
+      <a href="0001-the-workflow-as-a-pipeline.html">← Lesson 1</a> &nbsp;·&nbsp; <a href="index.html">All lessons</a> &nbsp;·&nbsp; <a href="../reference/skill-map.html">Skill Map</a> &nbsp;·&nbsp; Next → <a href="0003-domain-modeling.html">Lesson 3: Domain Modeling</a>
+    </p>
+  </footer>
+
+  <script src="../assets/quiz.js"></script>
+</main>
+</body>
+</html>

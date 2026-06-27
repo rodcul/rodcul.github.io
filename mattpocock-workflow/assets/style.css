@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Matt Pocock Workflow — shared lesson stylesheet
+   Tufte-inspired: generous margins, readable measure, restrained palette.
+   Linked by every lesson and reference doc. Print-friendly.
+   ========================================================================== */
+
+:root {
+  --ink:        #1a1714;
+  --ink-soft:   #54504a;
+  --paper:      #fdfbf7;
+  --rule:       #e3ddd2;
+  --accent:     #b5482b;   /* terracotta — Matt-ish warm */
+  --accent-2:   #2f6f6a;   /* teal, for the model-invoked counterpart */
+  --code-bg:    #f3efe7;
+  --good:       #2f7d4f;
+  --bad:        #b5482b;
+  --measure:    40rem;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 18px; }
+
+body {
+  font-family: var(--serif);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  margin: 0;
+  padding: 4rem 2rem 8rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lesson, .reference {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+/* --- Masthead ------------------------------------------------------------ */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 0.6rem;
+}
+h1 {
+  font-weight: 600;
+  font-size: 2.3rem;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+.dek {
+  font-size: 1.18rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 0 0 2rem;
+}
+.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.4rem; margin-bottom: 2.4rem; }
+
+h2 {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin: 2.8rem 0 0.8rem;
+  padding-top: 0.4rem;
+}
+h3 { font-weight: 600; font-size: 1.1rem; margin: 1.8rem 0 0.5rem; }
+
+p { margin: 0 0 1rem; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+a:hover { border-bottom-color: var(--accent); }
+
+strong { font-weight: 600; }
+
+/* --- Citations / sidenotes --------------------------------------------- */
+.cite {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.cite a { color: var(--ink-soft); }
+
+/* --- Callouts ---------------------------------------------------------- */
+.callout {
+  border-left: 3px solid var(--accent);
+  background: #faf4ee;
+  padding: 0.9rem 1.1rem;
+  margin: 1.4rem 0;
+  font-size: 0.96rem;
+}
+.callout.win { border-left-color: var(--good); background: #f0f6f1; }
+.callout .label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.callout.win .label { color: var(--good); }
+
+/* --- Code -------------------------------------------------------------- */
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+pre code { background: none; padding: 0; }
+
+/* --- Pipeline diagram (reusable) --------------------------------------- */
+.pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: stretch;
+  margin: 1.6rem 0;
+  font-family: var(--sans);
+}
+.pipeline .stage {
+  flex: 1 1 7rem;
+  min-width: 6.5rem;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  border-radius: 5px;
+  padding: 0.6rem 0.7rem;
+  background: #fff;
+}
+.pipeline .stage.model { border-top-color: var(--accent-2); }
+.pipeline .stage .num {
+  font-size: 0.65rem; color: var(--ink-soft); letter-spacing: 0.1em;
+}
+.pipeline .stage .skill {
+  font-family: var(--mono); font-size: 0.8rem; font-weight: 600; display: block; margin: 0.2rem 0;
+}
+.pipeline .stage .what { font-size: 0.74rem; color: var(--ink-soft); line-height: 1.35; }
+
+/* --- Skill cards / tables ---------------------------------------------- */
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 0.85rem; margin: 1.2rem 0; }
+th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+td code { font-size: 0.82em; }
+.tag { font-family: var(--sans); font-size: 0.66rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 999px; letter-spacing: 0.04em; white-space: nowrap; }
+.tag.user  { background: #f7e3dc; color: var(--accent); }
+.tag.model { background: #dcecea; color: var(--accent-2); }
+
+/* --- Footer / nav ------------------------------------------------------ */
+.lesson-footer {
+  margin-top: 3.5rem;
+  border-top: 2px solid var(--ink);
+  padding-top: 1.2rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.lesson-footer a { color: var(--accent); }
+.ask-teacher {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  background: #faf4ee;
+  border: 1px dashed var(--accent);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-top: 2rem;
+}
+
+/* --- Print ------------------------------------------------------------- */
+@media print {
+  body { padding: 0; background: #fff; font-size: 11pt; }
+  .quiz button, .ask-teacher { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: var(--ink); border: none; }
+  .pipeline { break-inside: avoid; }
+}
